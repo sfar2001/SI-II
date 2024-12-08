@@ -1,5 +1,6 @@
 package tn.esprit.tpfoyer.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -28,5 +29,10 @@ public class Reservation {
             inverseJoinColumns = @JoinColumn(name = "etudiant_id") // Foreign key column referring to Etudiant
     )
     private Set<Etudiant> etudiants;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    @ToString.Exclude
+    @JsonIgnore
+    Set<Reservation> reservations;
 
 }

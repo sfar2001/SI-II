@@ -22,12 +22,7 @@ public class Etudiant {
     private String ecole;
     private Date dateNaissance;
 
-    @ManyToOne
-    @JoinColumn(name = "universite_id")
-    private Universite universite; // Add this relationship
-
     @ManyToMany(mappedBy = "etudiants")
     private Set<Reservation> reservations;
-
 
 }

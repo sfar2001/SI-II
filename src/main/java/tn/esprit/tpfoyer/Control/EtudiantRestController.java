@@ -4,15 +4,11 @@ package tn.esprit.tpfoyer.Control;
 
 
 import lombok.AllArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 import tn.esprit.tpfoyer.Entity.Etudiant;
-import tn.esprit.tpfoyer.Entity.Reservation;
 import tn.esprit.tpfoyer.Services.IEtudiantService;
 
 import java.util.List;
-import java.util.Set;
 
 @RestController
 @AllArgsConstructor
@@ -52,15 +48,6 @@ public class EtudiantRestController {
         Etudiant etudiant = etudiantService.modifyEtudiant(e);
         return etudiant;
     }
-    @GetMapping("/retrieve-etudiant-reservations/{cin}")
-    public Set<Reservation> getReservationsByCin(@PathVariable("cin") Long cin) {
-        Etudiant etudiant = etudiantService.getEtudiantWithReservationsByCin(cin);
-        if (etudiant != null) {
-            return etudiant.getReservations();
-        } else {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Etudiant not found with CIN: " + cin);
-        }
-    }
-}
 
+}
 

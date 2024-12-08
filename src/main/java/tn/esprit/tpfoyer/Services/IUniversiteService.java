@@ -1,8 +1,6 @@
 package tn.esprit.tpfoyer.Services;
-import tn.esprit.tpfoyer.Entity.Etudiant;
 import tn.esprit.tpfoyer.Entity.Universite;
 
-import java.util.Date;
 import java.util.List;
 
 public interface IUniversiteService {
@@ -11,6 +9,4 @@ public interface IUniversiteService {
     Universite modifyUniversite(Universite u);
     Universite retrieveUniversite(Long idUniversite);
     void removeUniversite(Long idUniversite);
-    List<Etudiant> getEtudiantsByUniversiteAndDate(Long idUniversite, Date date);
-
 }

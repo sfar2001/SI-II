@@ -18,9 +18,8 @@ public class Bloc  {
     private String nomBloc;
     private Long capaciteBloc;
     @ManyToOne
-    private Foyer foyer;
+    Foyer foyer;
     @OneToMany(mappedBy = "bloc")
     @ToString.Exclude
     private Set<Chambre> chambres;
-
 }

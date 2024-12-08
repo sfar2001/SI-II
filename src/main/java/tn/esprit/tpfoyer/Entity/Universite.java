@@ -3,8 +3,6 @@ package tn.esprit.tpfoyer.Entity;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.Set;
-
 @Entity
 @Getter
 @Setter
@@ -20,6 +18,4 @@ public class Universite {
     private String adresse;
     @OneToOne(mappedBy = "universite")
     Foyer foyer;
-    @OneToMany(mappedBy = "universite", cascade = CascadeType.ALL)
-    private Set<Etudiant> etudiants; // Add this relationship
 }

@@ -10,7 +10,5 @@ public interface IBlocService {
     Bloc modifyBloc(Bloc b);
     Bloc retrieveBloc(Long idBloc);
     void removeBloc(Long idBloc);
-    Bloc assignBlocToFoyer(Long blocId, Long foyerId);
-
 }
 

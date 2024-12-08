@@ -37,8 +37,4 @@ public class EtudiantImpService implements IEtudiantService{
     public void removeEtudiant(Long idEtudiant) {
         etudiantRepository.deleteById(idEtudiant);
     }
-    @Override
-    public Etudiant getEtudiantWithReservationsByCin(Long cin) {
-        return etudiantRepository.findEtudiantWithReservationsByCin(cin);
-    }
 }

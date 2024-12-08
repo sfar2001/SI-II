@@ -44,10 +44,4 @@ public class BlocRestController {
     public Bloc modifyBloc(@RequestBody Bloc c) {
         return blocService.modifyBloc(c);
     }
-    // http://localhost:8089/tpfoyer/bloc/assign-bloc-to-foyer/{bloc-id}/{foyer-id}
-    @PutMapping("/assign-bloc-to-foyer/{bloc-id}/{foyer-id}")
-    public Bloc assignBlocToFoyer(@PathVariable("bloc-id") Long blocId, @PathVariable("foyer-id") Long foyerId) {
-        return blocService.assignBlocToFoyer(blocId, foyerId);
-    }
-
 }

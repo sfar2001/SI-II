@@ -27,4 +27,5 @@ public class Chambre   {
     @OneToMany
     private Set<Reservation> reservations;
 
+
 }

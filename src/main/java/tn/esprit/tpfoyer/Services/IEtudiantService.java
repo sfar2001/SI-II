@@ -10,6 +10,4 @@ public interface IEtudiantService {
     Etudiant modifyEtudiant(Etudiant e);
     Etudiant retrieveEtudiant(Long idEtudiant);
     void removeEtudiant(Long idEtudiant);
-    Etudiant getEtudiantWithReservationsByCin(Long cin);
-
 }

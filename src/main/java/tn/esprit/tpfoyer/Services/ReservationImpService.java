@@ -7,20 +7,19 @@ import org.springframework.stereotype.Service;
 import tn.esprit.tpfoyer.Entity.Reservation;
 import tn.esprit.tpfoyer.Repositories.ReservationRepository;
 
-import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
 
 @Service
 @AllArgsConstructor
-@Slf4j
+@Slf4j // To handle logging
 public class ReservationImpService implements IReservationService {
 
- ReservationRepository reservationRepository;
+    private final ReservationRepository reservationRepository;
 
-
-
-    // Autres méthodes de service
+    // Other service methods
     @Override
     public List<Reservation> retrieveAllReservations() {
         return reservationRepository.findAll();
@@ -38,29 +37,46 @@ public class ReservationImpService implements IReservationService {
 
     @Override
     public Reservation retrieveReservation(String idReservation) {
-        return reservationRepository.findById(Long.valueOf(idReservation)).orElse(null);
+        try {
+            return reservationRepository.findById(String.valueOf(Long.valueOf(idReservation))).orElse(null);
+        } catch (NumberFormatException e) {
+            log.error("Invalid reservation ID format: " + idReservation, e);
+            return null;
+        }
     }
 
     @Override
     public void removeReservation(String idReservation) {
-        reservationRepository.deleteById(Long.valueOf(idReservation));
-    }
-    @Scheduled(fixedRate = 50000) // Exécution toutes les 50 secondes
-    public void mettreAJourEtAfficherReservations() {
-        Date seuil = new Date(123, 0, 1); // 01/01/2024 (année 123 = 2023+1900)
-        List<Reservation> reservations = reservationRepository.findAll();
-
-        // Mettre à jour les réservations
-        for (Reservation reservation : reservations) {
-            if (reservation.getAnneeUniversitaire().before(seuil)) {
-                reservation.setEstValide(false); // Met à jour estValide à false
-                reservationRepository.save(reservation); // Sauvegarde
-            }
+        try {
+            reservationRepository.deleteById(String.valueOf(Long.valueOf(idReservation)));
+        } catch (NumberFormatException e) {
+            log.error("Invalid reservation ID format: " + idReservation, e);
         }
-
-        // Afficher toutes les réservations mises à jour
-        log.info("Liste des réservations après mise à jour :");
-        reservations.forEach(reservation -> log.info(reservation.toString()));
     }
+
+    @Scheduled(fixedRate = 50000) // Every 50 seconds
+    public void mettreAJourEtAfficherReservations() {
+        try {
+            // Define the target date
+            LocalDate targetDate = LocalDate.of(2024, 1, 1);
+            Date targetDateConverted = Date.from(targetDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+
+            // Fetch reservations before the target date
+            List<Reservation> reservations = reservationRepository.findByAnneeUniversitaireBefore(targetDateConverted);
+
+            for (Reservation reservation : reservations) {
+                // Update each reservation
+                reservation.setEstValide(false);
+                reservationRepository.save(reservation);
+
+                // Log the updated reservation
+                log.info("Reservation after update: {}", reservation);
+            }
+        } catch (Exception e) {
+            log.error("Error while updating reservations", e);
+        }
+    }
+
+    // creation d'une chambre et une reservation en mm temps
 
 }

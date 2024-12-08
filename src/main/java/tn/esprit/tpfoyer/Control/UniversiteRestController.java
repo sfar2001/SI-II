@@ -4,13 +4,10 @@ package tn.esprit.tpfoyer.Control;
 
 
 import lombok.AllArgsConstructor;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
-import tn.esprit.tpfoyer.Entity.Etudiant;
 import tn.esprit.tpfoyer.Entity.Universite;
 import tn.esprit.tpfoyer.Services.IUniversiteService;
 
-import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -53,12 +50,6 @@ public class UniversiteRestController {
         return universiteService.modifyUniversite(u);
 
 
-    }
-    @GetMapping("/{idUniversite}/etudiants-born-after")
-    public List<Etudiant> getEtudiantsBornAfter(
-            @PathVariable Long idUniversite,
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date date) {
-        return universiteService.getEtudiantsByUniversiteAndDate(idUniversite, date);
     }
 }
 

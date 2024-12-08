@@ -3,11 +3,9 @@ package tn.esprit.tpfoyer.Services;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import tn.esprit.tpfoyer.Entity.Bloc;
-import tn.esprit.tpfoyer.Entity.Foyer;
 import tn.esprit.tpfoyer.Repositories.BlocRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
-import tn.esprit.tpfoyer.Repositories.FoyerRepository;
 
 
 import java.util.List;
@@ -18,7 +16,6 @@ import java.util.List;
 
 public class BlocImpService implements IBlocService{
     BlocRepository blocRepository;
-    FoyerRepository foyerRepository;
     @Override
     @Scheduled(fixedRate = 60000)
     public List<Bloc> retrieveAllBlocs() {
@@ -51,16 +48,4 @@ public class BlocImpService implements IBlocService{
     public void removeBloc(Long idBloc) {
         blocRepository.deleteById(idBloc);
     }
-    @Override
-    public Bloc assignBlocToFoyer(Long blocId, Long foyerId) {
-        Bloc bloc = blocRepository.findById(blocId).orElse(null);
-        Foyer foyer = foyerRepository.findById(foyerId).orElse(null);
-
-        if (bloc != null && foyer != null) {
-            bloc.setFoyer(foyer);
-            return blocRepository.save(bloc);
-        }
-        return null; // or throw an exception if appropriate
-    }
-
 }
